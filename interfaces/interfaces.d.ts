@@ -20,4 +20,5 @@ interface TrendingMovie {
     movie_id: number;
     title: string;
     count: number;
+    poster_url: string;
 }
