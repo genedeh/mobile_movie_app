@@ -1,12 +1,15 @@
 import { icons } from "@/constants/icons";
+import { useDeviceAccount } from "@/contexts/DeviceAccountContext";
 import Constants from 'expo-constants';
 import React from "react";
-import { Image, Text, TouchableOpacity, View , Platform} from "react-native";
+import { Image, Platform, Text, TouchableOpacity, View } from "react-native";
 
 const deviceName = Platform.OS + ' ' + Constants.deviceName;
 
 
 const Profile = () => {
+    const { accountId } = useDeviceAccount();
+    console.log('Account ID:', accountId);
     return (
         <View className="flex-1 bg-primary px-5 pt-12">
             {/* Profile Info */}
@@ -24,6 +27,7 @@ const Profile = () => {
             <View className="bg-dark-100 rounded-lg p-4 mb-4">
                 <Text className="text-white font-semibold text-sm mb-1">Linked Device</Text>
                 <Text className="text-light-200 text-xs">{deviceName}</Text>
+                <Text className="text-light-200 text-xs">Account ID: {accountId}</Text>
             </View>
 
             {/* Account Options */}
