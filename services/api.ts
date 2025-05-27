@@ -69,7 +69,7 @@ export const addMovieToFavorites = async (
         }),
       }
     );
-
+    console.log("ADDED", response.ok);
     return response.ok;
   } catch (error) {
     console.error("Error adding movie to favorites:", error);
@@ -78,11 +78,11 @@ export const addMovieToFavorites = async (
 };
 
 export const fetchFavoriteMovies = async (
-  accountId: number
+  accountId: number | null
 ): Promise<Movie[]> => {
   try {
     const response = await fetch(
-      `${TMDB_CONFIG.BASE_URL}/account/${accountId}/favorite/movies?api_key=${TMDB_CONFIG.API_KEY}`,
+      `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?language=en-US&page=1&sort_by=created_at.asc`,
       {
         method: "GET",
         headers: TMDB_CONFIG.headers,
@@ -98,6 +98,60 @@ export const fetchFavoriteMovies = async (
     return data.results;
   } catch (error) {
     console.error("Error fetching favorite movies:", error);
+    throw error;
+  }
+};
+
+export const addMovieToWatchList = async (
+  movieId: number | undefined,
+  accountId: number | null
+) => {
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/account/${accountId}/watchlist`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...TMDB_CONFIG.headers,
+        },
+
+        body: JSON.stringify({
+          media_type: "movie",
+          media_id: movieId,
+          watchlist: true,
+        }),
+      }
+    );
+
+    return response.ok;
+  } catch (error) {
+    console.error("Error adding movie to watchlists:", error);
+    throw error;
+  }
+};
+
+export const fetchWatchListsMovies = async (
+  accountId: number | null
+): Promise<Movie[]> => {
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/account/${accountId}/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc`,
+      {
+        method: "GET",
+        headers: TMDB_CONFIG.headers,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch watchlist movies: ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    console.error("Error fetching watchlist movies:", error);
     throw error;
   }
 };

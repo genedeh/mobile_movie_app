@@ -1,6 +1,6 @@
 import { icons } from "@/constants/icons";
 import { useDeviceAccount } from "@/contexts/DeviceAccountContext";
-import { addMovieToFavorites, fetchMovieDetails } from "@/services/api";
+import { addMovieToFavorites, addMovieToWatchList, fetchMovieDetails } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -22,6 +22,7 @@ const MovieDetails = () => {
     const { id } = useLocalSearchParams();
     const { accountId } = useDeviceAccount();
     const [addToFavoritesIsLoading, setAddToFavoritesIsLoading] = useState(false);
+    const [addToWatchlistsIsLoading, setAddToWatchlistsIsLoading] = useState(false);
     const { data: movie, loading } = useFetch(() => fetchMovieDetails(id as string));
     const handleAddToFavorites = async (movie_id: number | undefined) => {
         try {
@@ -31,6 +32,17 @@ const MovieDetails = () => {
             console.error(`Error adding movie ${movie_id} to favorites:`, error);
         } finally {
             setAddToFavoritesIsLoading(false);
+        }
+    }
+
+    const handleAddToWatchlist = async (movie_id: number | undefined) => {
+        try {
+            setAddToWatchlistsIsLoading(true);
+            await addMovieToWatchList(movie_id, accountId)
+        } catch (error) {
+            console.error(`Error adding movie ${movie_id} to watchlists:`, error);
+        } finally {
+            setAddToWatchlistsIsLoading(false);
         }
     }
 
@@ -56,7 +68,7 @@ const MovieDetails = () => {
                         <View className="absolute bottom-5 w-full px-5 flex-row justify-between">
                             {/* Play Button */}
                             <TouchableOpacity
-                                onPress={() => console.log('Play movie')}
+                                onPress={() => handleAddToWatchlist(movie?.id)}
                                 className="flex-1 bg-dark-100 mr-2 py-3 rounded-full flex-row items-center justify-center"
                                 style={{
                                     elevation: 4,
@@ -66,8 +78,14 @@ const MovieDetails = () => {
                                     shadowRadius: 3.84,
                                 }}
                             >
-                                <Image source={icons.play} className="w-5 h-5 mr-2" />
-                                <Text className="text-white font-semibold">Play</Text>
+                                {addToWatchlistsIsLoading ?
+                                    <ActivityIndicator
+                                        size={"small"}
+                                        className="self-center color-accent"
+                                    /> : <>
+                                        <Image source={icons.play} className="w-5 h-5 mr-2" />
+                                        <Text className="text-white font-semibold">Play</Text>
+                                    </>}
                             </TouchableOpacity>
 
                             {/* Favourite Button */}

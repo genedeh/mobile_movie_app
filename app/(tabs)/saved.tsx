@@ -49,11 +49,12 @@ const Saved = () => {
                         className="mt-10 self-center"
                     />
                 ) : savedMoviesError ? (
-                    <Text>Error : {savedMoviesError?.message}</Text>
+                    <Text className="text-red-500 px-5 my-3">
+                        Error : {savedMoviesError?.message}</Text>
                 ) : (
                     <View className="flex-1 mt-10">
                         <SearchBar
-                            placeholder="Search for movies, series, and more"
+                            placeholder="Search for saved movies, series, and more"
                             onChangeText={handleSearch}
                         />
                         <View className="mt-10">
