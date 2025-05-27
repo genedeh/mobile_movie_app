@@ -1,50 +1,62 @@
-# Welcome to your Expo app 👋
+# GFlix
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**GFlix** is a sleek personal movie discovery app built with **React Native** and **Expo**, powered by [TMDb API](https://www.themoviedb.org/documentation/api). With GFlix, users can explore trending films, search for specific titles, view detailed information about any movie, and save favorites or add to their watchlist.
 
-## Get started
+---
 
-1. Install dependencies
+## Features
 
+- **Home Screen**: Browse trending and popular movies.
+- **Search Screen**: Real-time search through the TMDb movie database.
+- **Movie Details Screen**: See extended movie info including rating, overview, and genres.
+- **Favorites**: Add or remove movies from your personal favorites list.
+- **Watchlist**: Add or remove movies to watch later.
+- **Saved Screen**: Quickly access your favorite and watchlisted movies.
+- **Profile Screen**: Displays user info.
+
+---
+
+## Screenshots
+
+   ![Movie Detail](./assets/screenshots/screenshot1.jpeg)
+   ![Profile Screen](./assets/screenshots/screenshot2.jpeg)
+   ![Saved Screen](./assets/screenshots/screenshot3.jpeg)
+   ![Search Screen](./assets/screenshots/screenshot4.jpeg)
+   ![Home Screen](./assets/screenshots/screenshot5.jpeg)
+   ![Trending Movies](./assets/screenshots/screenshot6.jpeg)
+
+
+
+---
+
+## Tech Stack
+
+- **React Native** (with functional components and hooks)
+- **Expo** (for cross-platform development)
+- **TMDb API** (for movie data)
+- **AsyncStorage** (for local session caching)
+- **React Navigation** (for screen transitions)
+- **Tailwind CSS** (via nativewind or custom styling)
+- **Custom Hooks** and **Reusable Components**
+
+---
+
+## Dependencies
+
+Some of the key dependencies include:
+
+- `expo`
+- `react-native`
+- `@react-navigation/native`
+- `@react-native-async-storage/async-storage`
+- `react-native-safe-area-context`
+- `nativewind`
+
+---
+
+## Setup Instructions
+
+1. **Clone the Repository**
    ```bash
    npm install
-   ```
-
-2. Start the app
-
-   ```bash
    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
