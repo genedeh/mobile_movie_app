@@ -1,8 +1,9 @@
 import { icons } from "@/constants/icons";
-import { fetchMovieDetails } from "@/services/api";
+import { useDeviceAccount } from "@/contexts/DeviceAccountContext";
+import { addMovieToFavorites, fetchMovieDetails } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 
@@ -19,8 +20,20 @@ const MovieInfo = ({ label, value }: { label: string, value?: string | number | 
 
 const MovieDetails = () => {
     const { id } = useLocalSearchParams();
+    const { accountId } = useDeviceAccount();
+    const [addToFavoritesIsLoading, setAddToFavoritesIsLoading] = useState(false);
     const { data: movie, loading } = useFetch(() => fetchMovieDetails(id as string));
-    console.log('Poster URL:', `https://image.tmdb.org/t/p/w500${movie?.poster_path}`);
+    const handleAddToFavorites = async (movie_id: number | undefined) => {
+        try {
+            setAddToFavoritesIsLoading(true);
+            await addMovieToFavorites(movie_id, accountId)
+        } catch (error) {
+            console.error(`Error adding movie ${movie_id} to favorites:`, error);
+        } finally {
+            setAddToFavoritesIsLoading(false);
+        }
+    }
+
     return (
 
         <View className="bg-primary flex-1 relative">
@@ -40,6 +53,44 @@ const MovieDetails = () => {
                             resizeMode='stretch'
 
                         />
+                        <View className="absolute bottom-5 w-full px-5 flex-row justify-between">
+                            {/* Play Button */}
+                            <TouchableOpacity
+                                onPress={() => console.log('Play movie')}
+                                className="flex-1 bg-dark-100 mr-2 py-3 rounded-full flex-row items-center justify-center"
+                                style={{
+                                    elevation: 4,
+                                    shadowColor: '#000',
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84,
+                                }}
+                            >
+                                <Image source={icons.play} className="w-5 h-5 mr-2" />
+                                <Text className="text-white font-semibold">Play</Text>
+                            </TouchableOpacity>
+
+                            {/* Favourite Button */}
+                            <TouchableOpacity
+                                onPress={() => handleAddToFavorites(movie?.id)}
+                                className="w-14 h-14 bg-dark-100 items-center justify-center rounded-full"
+                                style={{
+                                    elevation: 4,
+                                    shadowColor: '#000',
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84,
+                                }}
+                            >
+                                {addToFavoritesIsLoading ?
+                                    <ActivityIndicator
+                                        size={"small"}
+                                        className="self-center color-accent"
+                                    /> :
+                                    <Image source={icons.saved} className="w-6 h-6" tintColor="#" />
+                                }
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View className="flex-col items-start justify-center mt-5 px-5">
                         <Text className="text-white font-bold text-xl">{movie?.title}</Text>
