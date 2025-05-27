@@ -18,12 +18,12 @@
 
 ## Screenshots
 
-   ![Movie Detail](./assets/screenshots/screenshot1.jpeg)
-   ![Profile Screen](./assets/screenshots/screenshot2.jpeg)
-   ![Saved Screen](./assets/screenshots/screenshot3.jpeg)
-   ![Search Screen](./assets/screenshots/screenshot4.jpeg)
-   ![Home Screen](./assets/screenshots/screenshot5.jpeg)
-   ![Trending Movies](./assets/screenshots/screenshot6.jpeg)
+   [Movie Detail](./assets/screenshots/screenshot1.jpeg)
+   [Profile Screen](./assets/screenshots/screenshot2.jpeg)
+   [Saved Screen](./assets/screenshots/screenshot3.jpeg)
+   [Search Screen](./assets/screenshots/screenshot4.jpeg)
+   [Home Screen](./assets/screenshots/screenshot5.jpeg)
+   [Trending Movies](./assets/screenshots/screenshot6.jpeg)
 
 
 
